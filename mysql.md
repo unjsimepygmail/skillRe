@@ -40,10 +40,33 @@ explain select 1 union all select 1;
 > + 这一列显示mysql实际采用哪个索引来优化对该表的访问。
 > + 如果没有使用索引，则该列是 NULL。如果想强制mysql使用或忽视possible_keys列中的索引，在查询中使用 force index、ignore index。
 
-*key_len列
+* key_len列
 > + 这一列显示了mysql在索引里使用的字节数，通过这个值可以算出具体使用了索引中的哪些列。 
 > + 举例来说，film_actor的联合索引 idx_film_actor_id 由 film_id 和 actor_id 两个int列组成，并且每个int是4字节。通过结果中的key_len=4可推断出查询使用了第一个列：film_id列来执行索引查找。
 
 
+## 索引失效的几种场景
+> + 模糊查询 like '%sss' 百分比开头的查询，索引失效 百分比在最后索引不失效  like '320%'
+> + 使用or查询 where name = 'liu' or id = 320,name字段有索引 id没有索引 此时索引失效。or两边必须同时存在索引
+> + 组合索引(a,b,c) 索引生效的场景为 a，ab，abc，其他方式索引失效
+> + 数据类型出现隐式转化。如varchar不加单引号的话可能会自动转换为int型，使索引无效，产生全表扫描。 varchar字段 不加上'' 索引失效
+> + 在索引字段上使用not，<>，!=。不等于操作符是永远不会用到索引的，因此对它的处理只会产生全表扫描。 优化方法： key<>0 改为 key>0 or key<0。
+> + 对索引字段进行计算操作、字段上使用函数。（索引为 emp(ename,empno,sal)）
+> + 当全表扫描速度比索引速度快时，mysql会使用全表扫描，此时索引失效。
 
+## mysql常用函数
+> + 聚集函数 avg
+count
+max
+min
+sum
+
+> + 用于处理字符串的函数
+合并字符串函数：concat(str1,str2,str3…)
+比较字符串大小函数：strcmp(str1,str2)
+获取字符串字节数函数：length(str)
+获取字符串字符数函数：char_length(str)
+字母大小写转换函数：大写：upper(x),ucase(x)；小写lower(x),lcase(x)
+截取字符串：left('admin',2)ad right('admin',2) in
+字符串去空函数： ltrim (str) 去除左边的空格 rtrim(str)去除右边的空格 trim(str) 去除两边的空格
 
