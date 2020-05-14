@@ -14,3 +14,6 @@
 
 ## spring 的事务传播级别
 > + PROPAGATION_REQUIRED 默认的spring事务传播级别，使用该级别的特点是，如果上下文中已经存在事务，那么就加入到事务中执行，如果当前上下文中不存在事务，则新建事务执行。所以这个级别通常能满足处理大多数的业务场景。
+
+## spring AOP动态代理实现
+jdk动态代理:https://blog.csdn.net/jiankunking/article/details/52143504
