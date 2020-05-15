@@ -16,4 +16,9 @@
 > + PROPAGATION_REQUIRED 默认的spring事务传播级别，使用该级别的特点是，如果上下文中已经存在事务，那么就加入到事务中执行，如果当前上下文中不存在事务，则新建事务执行。所以这个级别通常能满足处理大多数的业务场景。
 
 ## spring AOP动态代理实现
-jdk动态代理:https://blog.csdn.net/jiankunking/article/details/52143504
+> + jdk动态代理:https://blog.csdn.net/jiankunking/article/details/52143504
+
+> + 通过实现 InvocationHandler 接口创建自己的调用处理器；
+> + 通过为 Proxy 类指定 ClassLoader 对象和一组 interface 来创建动态代理类；
+> + 通过反射机制获得动态代理类的构造函数，其唯一参数类型是调用处理器接口类型；
+> + 通过构造函数创建动态代理类实例，构造时调用处理器对象作为参数被传入。
